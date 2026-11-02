@@ -1,0 +1,37 @@
+{
+  "name": "barraquinha-digital",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint",
+    "discovery:package": "node infra/discovery/package.mjs",
+    "test:discovery": "node infra/discovery/test-local.mjs",
+    "setup:local": "node scripts/setup-local.mjs",
+    "test:ui": "node scripts/ui-smoke.mjs",
+    "seed:model": "node scripts/seed-model.mjs",
+    "check:docs": "node scripts/check-docs.mjs"
+  },
+  "dependencies": {
+    "@azure/cosmos": "^4.10.1",
+    "@azure/identity": "^4.14.1",
+    "@azure/storage-blob": "^12.34.0",
+    "next": "16.2.12",
+    "react": "19.2.4",
+    "react-dom": "19.2.4"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.2.12",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  },
+  "description": "Modelo acad\u00eamico de pedidos mobile, opera\u00e7\u00e3o e Discovery em Next.js/Azure Cosmos DB",
+  "license": "MIT"
+}

@@ -1,0 +1,4 @@
+import type { Metadata } from 'next';
+import s from '@/components/beach/Beach.module.css';
+export const metadata:Metadata={title:'Barraquinha Digital — WiseTI',robots:{index:false,follow:false},referrer:'no-referrer'};
+export default function Layout({children}:{children:React.ReactNode}){return <div className={s.shell}><header className={s.header}><a className={s.brand} href="/barraquinha">☀ Barraquinha Digital</a><nav><a href="/barraquinha">Cardápio</a><a href="/barraquinha/operacao">Painel da barraca</a><a href="/barraquinha/api">Testar API</a></nav></header><div className={s.banner}>MODELO DE TESTE · Preços e pedidos de demonstração · Sem cobrança ou entrega real</div>{children}<footer className={s.footer}>WiseTIConsulting · Pedidos de teste persistidos na Azure/Cosmos por até 7 dias. Não informe nome, telefone ou dados de pagamento. A disponibilidade depende dos limites do plano F1 gratuito.</footer></div>}

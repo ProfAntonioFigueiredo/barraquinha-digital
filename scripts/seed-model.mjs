@@ -1,0 +1,7 @@
+import {mkdir,writeFile} from 'node:fs/promises';
+process.loadEnvFile('.env.local');
+const origin=process.env.DISCOVERY_ORIGIN||'http://127.0.0.1:3000';
+if(!['127.0.0.1','localhost'].includes(new URL(origin).hostname))throw new Error('Este comando preenche apenas o ambiente local; não use na demonstração compartilhada.');
+let cookie='';
+async function request(path,body){const response=await fetch(origin+'/api/discovery/'+path,{method:body?'POST':'GET',headers:{'Content-Type':'application/json',Origin:origin,...(cookie?{Cookie:cookie}:{})},...(body?{body:JSON.stringify(body)}:{})});const result=await response.json();if(!response.ok)throw new Error(result.error);const header=response.headers.get('set-cookie');if(header)cookie=header.split(';')[0];return result;}
+try{await request('session',{key:process.env.DISCOVERY_ADMIN_KEY});const p=await request('projects',{project:'barraquinha'});const before=await request('records/'+p.id);await mkdir('build',{recursive:true});await writeFile('build/model-before-'+Date.now()+'.json',JSON.stringify(before,null,2),{mode:0o600});await request('projects',{project:'barraquinha',action:'complete-test-model',etag:before.etag});await request('beach/orders',{action:'seed'});const state=await request('records/'+p.id+'/studio');if(!Object.values(state.states).every(x=>x==='revisado'))throw new Error('Verifique os documentos.');console.log('Modelo fictício completo:13 respostas,11 documentos atuais e3 exemplos de pedidos. Snapshot anterior em build/.');}finally{if(cookie)await request('session',{logout:true});}

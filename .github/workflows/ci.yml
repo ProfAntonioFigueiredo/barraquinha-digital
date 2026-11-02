@@ -1,0 +1,21 @@
+name: Build e testes
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  app:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - run: npm run check:docs
+      - run: npm run lint
+      - run: npm run build
+        env:
+          DISCOVERY_PORTAL: 'true'
+      - run: npm run test:discovery
